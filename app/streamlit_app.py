@@ -146,3 +146,51 @@ st.write(
 
 st.success("Estado actual: no se detecta data drift significativo.")
 
+# =================================================
+# 9. Variables más importantes del modelo
+# =================================================
+
+st.subheader("Top variables más importantes")
+
+st.write(
+    """
+    El siguiente gráfico muestra las variables con mayor importancia
+    dentro del modelo XGBoost entrenado.
+    """
+)
+
+variables = [
+    "tipo_laboral_Independiente",
+    "tipo_credito",
+    "creditos_sectorCooperativo",
+    "plazo_meses",
+    "tendencia_ingresos_Decreciente",
+    "puntaje_datacredito",
+    "promedio_ingresos_datacredito",
+    "tendencia_ingresos_Estable",
+    "creditos_sectorFinanciero",
+    "total_otros_prestamos"
+]
+
+importancias = [
+    0.197514,
+    0.162944,
+    0.092683,
+    0.086780,
+    0.071880,
+    0.063251,
+    0.042574,
+    0.037592,
+    0.036223,
+    0.035316
+]
+
+importance_df = pd.DataFrame({
+    "Variable": variables,
+    "Importancia": importancias
+})
+
+st.bar_chart(
+    importance_df.set_index("Variable")
+)
+
