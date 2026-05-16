@@ -36,6 +36,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
+import matplotlib.pyplot as plt
+import joblib
 
 
 from ft_engineering import (
@@ -207,3 +209,44 @@ if __name__ == "__main__":
     print("\nROC-AUC - XGBoost:")
 
     print(roc_auc_score(y_test, y_pred_proba_xgb))
+
+    # =================================================
+    # 6. Importancia de variables - XGBoost
+    # =================================================
+
+    importancia_variables = pd.DataFrame({
+        "Variable": X.columns,
+        "Importancia": modelo_xgb.feature_importances_
+    })
+
+    importancia_variables = importancia_variables.sort_values(
+        by="Importancia",
+        ascending=False
+    )
+
+    print("\nTop variables más importantes:")
+    print(importancia_variables.head(10))
+
+    # Gráfico
+    plt.figure(figsize=(10, 6))
+
+    plt.barh(
+        importancia_variables["Variable"].head(10),
+        importancia_variables["Importancia"].head(10)
+    )
+
+    plt.xlabel("Importancia")
+    plt.ylabel("Variables")
+    plt.title("Top 10 variables más importantes - XGBoost")
+
+    plt.gca().invert_yaxis()
+
+    plt.show()
+
+    # =================================================
+    # 7. Guardado del modelo entrenado
+    # =================================================
+
+    joblib.dump(modelo_xgb, "modelo_xgboost.pkl")
+
+    print("\nModelo XGBoost guardado correctamente")
