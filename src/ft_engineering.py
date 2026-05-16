@@ -69,9 +69,44 @@ def limpiar_tendencia_ingresos(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+# =================================================
+# 4. Tratamiento de valores nulos
+# =================================================
+
+def tratar_valores_nulos(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Realiza imputación básica de valores nulos.
+
+    Estrategia:
+    - Variables numéricas: mediana.
+    - Variables categóricas: moda.
+    """
+    df = df.copy()
+
+    # Variables numéricas
+    variables_numericas = df.select_dtypes(
+        include=["int64", "float64"]
+    ).columns
+
+    for columna in variables_numericas:
+        df[columna] = df[columna].fillna(
+            df[columna].median()
+        )
+
+    # Variables categóricas
+    variables_categoricas = df.select_dtypes(
+        include=["object"]
+    ).columns
+
+    for columna in variables_categoricas:
+        df[columna] = df[columna].fillna(
+            df[columna].mode()[0]
+        )
+
+    return df
 
 # =================================================
-# 4. Ejecución de prueba del script
+# 5. Ejecución de prueba del script
 # =================================================
 
 if __name__ == "__main__":
@@ -84,6 +119,10 @@ if __name__ == "__main__":
     print(df.shape)
 
     df = limpiar_tendencia_ingresos(df)
+    df = tratar_valores_nulos(df)
+
+    print("\nValores nulos restantes:")
+    print(df.isnull().sum().sum())
 
     print("\nValores únicos de tendencia_ingresos después de la limpieza:")
     print(df["tendencia_ingresos"].unique())
