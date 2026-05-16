@@ -45,3 +45,42 @@ def cargar_datos(ruta_archivo: str) -> pd.DataFrame:
     """
     df = pd.read_excel(ruta_archivo)
     return df
+
+def limpiar_tendencia_ingresos(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Limpia la variable tendencia_ingresos.
+
+    Esta variable debería contener categorías como:
+    - Creciente
+    - Estable
+    - Decreciente
+
+    Durante el EDA se detectaron valores numéricos mezclados,
+    por lo que se reemplazan por NaN para tratarlos luego.
+    """
+    df = df.copy()
+
+    categorias_validas = ["Creciente", "Estable", "Decreciente"]
+
+    df["tendencia_ingresos"] = df["tendencia_ingresos"].where(
+        df["tendencia_ingresos"].isin(categorias_validas),
+        np.nan
+    )
+
+    return df
+
+if __name__ == "__main__":
+
+    # Carga de datos
+    ruta = "data/Base_de_datos.xlsx"
+
+    df = cargar_datos(ruta)
+
+    print("Dataset cargado correctamente")
+    print(df.shape)
+
+    # Limpieza de tendencia_ingresos
+    df = limpiar_tendencia_ingresos(df)
+
+    print("\nValores únicos de tendencia_ingresos:")
+    print(df["tendencia_ingresos"].unique())
