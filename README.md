@@ -188,7 +188,31 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+---
 
+## Docker
+
+El proyecto incluye un `Dockerfile` y un `.dockerignore` para construir una imagen con la API de FastAPI y sus dependencias.
+
+### Construir imagen Docker
+
+```bash
+docker build -t pi-m5-riesgo-crediticio .
+```
+
+### Ejecutar contenedor
+
+```bash
+docker run -p 8000:8000 pi-m5-riesgo-crediticio
+```
+
+### Acceder a la API
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Nota: para ejecutar estos comandos es necesario tener Docker instalado y activo localmente.
 ---
 
 ## Autor
