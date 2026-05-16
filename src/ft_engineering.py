@@ -137,9 +137,27 @@ def transformar_variables_categoricas(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+# =================================================
+# 6. Separación de variables predictoras y objetivo
+# =================================================
+
+def separar_variables_modelo(
+    df: pd.DataFrame,
+    variable_objetivo: str = "Pago_atiempo"
+) -> tuple[pd.DataFrame, pd.Series]:
+    """
+    Separa el dataset en variables predictoras X
+    y variable objetivo y.
+    """
+    df = df.copy()
+
+    X = df.drop(columns=[variable_objetivo])
+    y = df[variable_objetivo]
+
+    return X, y
 
 # =================================================
-# 6. Ejecución de prueba del script
+# 7. Ejecución de prueba del script
 # =================================================
 
 if __name__ == "__main__":
@@ -170,3 +188,12 @@ if __name__ == "__main__":
 
     print("\nDimensiones después de transformar categóricas:")
     print(df.shape)
+
+    # Separación de variables
+    X, y = separar_variables_modelo(df)
+
+    print("\nDimensiones de X:")
+    print(X.shape)
+
+    print("\nDimensiones de y:")
+    print(y.shape)
