@@ -105,3 +105,44 @@ st.write(
 )
 
 st.dataframe(df.head())
+
+# =================================================
+# 7. Resultados del modelo
+# =================================================
+
+st.subheader("Resultados del modelo XGBoost")
+
+st.write(
+    """
+    Luego de comparar distintos modelos supervisados, se seleccionó XGBoost
+    como el modelo con mejor desempeño general.
+
+    El modelo fue entrenado luego de aplicar limpieza de datos, tratamiento
+    de valores nulos, transformación de variables categóricas y balanceo de
+    clases mediante SMOTE.
+    """
+)
+
+col4, col5, col6 = st.columns(3)
+
+col4.metric("ROC-AUC Test", "0.66")
+col5.metric("Recall clase 0", "0.33")
+col6.metric("Modelo seleccionado", "XGBoost")
+
+
+# =================================================
+# 8. Monitoreo de data drift
+# =================================================
+
+st.subheader("Monitoreo de Data Drift")
+
+st.write(
+    """
+    Se implementó un monitoreo inicial de data drift utilizando KS Test.
+    En la simulación realizada no se detectaron cambios estadísticamente
+    significativos entre los datos históricos y los datos actuales simulados.
+    """
+)
+
+st.success("Estado actual: no se detecta data drift significativo.")
+
