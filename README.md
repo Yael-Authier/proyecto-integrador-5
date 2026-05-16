@@ -88,25 +88,37 @@ PI\_M5\_Yael\_Authier/
 
 └── README.md
 
-Tecnologías utilizadas
 
-Python
 
-Pandas
+```
 
-NumPy
+\# Tecnologías utilizadas
 
-Scikit-learn
 
-XGBoost
 
-Imbalanced-learn (SMOTE)
+\- Python
 
-Matplotlib
+\- Pandas
 
-Streamlit
+\- NumPy
 
-Modelos entrenados
+\- Scikit-learn
+
+\- XGBoost
+
+\- Imbalanced-learn (SMOTE)
+
+\- Matplotlib
+
+\- Streamlit
+
+
+
+\---
+
+
+
+\# Modelos entrenados
 
 
 
@@ -114,11 +126,11 @@ Se evaluaron distintos modelos supervisados:
 
 
 
-Regresión Logística
+\- Regresión Logística
 
-Random Forest
+\- Random Forest
 
-XGBoost
+\- XGBoost
 
 
 
@@ -126,17 +138,27 @@ El modelo seleccionado fue XGBoost por obtener el mejor desempeño general.
 
 
 
-Resultados principales
+\---
 
-ROC-AUC en test
 
-Regresión Logística: \~0.58
 
-Random Forest: \~0.63
+\# Resultados principales
 
-XGBoost: \~0.66
 
-Validación cruzada optimizada
+
+\## ROC-AUC en test
+
+
+
+\- Regresión Logística: \~0.58
+
+\- Random Forest: \~0.63
+
+\- XGBoost: \~0.66
+
+
+
+\## Validación cruzada optimizada
 
 
 
@@ -144,7 +166,11 @@ El modelo XGBoost optimizado alcanzó aproximadamente:
 
 
 
+```text
+
 ROC-AUC ≈ 0.978
+
+```
 
 
 
@@ -152,7 +178,11 @@ durante validación cruzada sobre datos balanceados mediante SMOTE.
 
 
 
-Monitoreo de Data Drift
+\---
+
+
+
+\# Monitoreo de Data Drift
 
 
 
@@ -164,7 +194,11 @@ Actualmente no se detectó drift significativo.
 
 
 
-Dashboard Streamlit
+\---
+
+
+
+\# Dashboard Streamlit
 
 
 
@@ -172,39 +206,97 @@ El proyecto incluye una aplicación interactiva desarrollada con Streamlit que p
 
 
 
-Información general del dataset
+\- Información general del dataset
 
-Métricas del modelo
+\- Métricas del modelo
 
-Estado de monitoreo
+\- Estado de monitoreo
 
-Variables más importantes
+\- Variables más importantes
 
-Instalación
 
-Clonar repositorio
+
+\---
+
+
+
+\# Instalación
+
+
+
+\## Clonar repositorio
+
+
+
+```bash
 
 git clone <URL\_DEL\_REPOSITORIO>
 
-Crear entorno virtual
+```
+
+
+
+\## Crear entorno virtual
+
+
+
+```bash
 
 python -m venv venv
 
-Activar entorno virtual
+```
 
-Windows
+
+
+\## Activar entorno virtual
+
+
+
+\### Windows
+
+
+
+```bash
 
 venv\\Scripts\\activate
 
-Instalar dependencias
+```
+
+
+
+\## Instalar dependencias
+
+
+
+```bash
 
 pip install -r requirements.txt
 
-Ejecución de Streamlit
+```
+
+
+
+\---
+
+
+
+\# Ejecución de Streamlit
+
+
+
+```bash
 
 streamlit run app/streamlit\_app.py
 
-Autor
+```
+
+
+
+\---
+
+
+
+\# Autor
 
 
 
