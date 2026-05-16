@@ -1,0 +1,15 @@
+# Entorno virtual local
+venv/
+
+# Archivos de Git
+.git/
+
+# Caché de Python
+__pycache__/
+*.pyc
+
+# Checkpoints de notebooks
+.ipynb_checkpoints/
+
+# Archivos temporales
+*.log
