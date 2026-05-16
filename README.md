@@ -1,3 +1,12 @@
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![Docker](https://img.shields.io/badge/Docker-ready-blue)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
+![SonarCloud](https://img.shields.io/badge/SonarCloud-passing-orange)
+![Status](https://img.shields.io/badge/status-complete-success)
+
+
 # Proyecto Integrador MLOps - Predicción de Pago de Créditos
 
 ## Descripción del proyecto
