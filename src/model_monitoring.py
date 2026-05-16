@@ -31,6 +31,7 @@ Yael Authier
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from scipy.stats import ks_2samp
 
@@ -132,3 +133,24 @@ if __name__ == "__main__":
 
     print("Resultados de data drift con KS Test:")
     print(resultados_drift)
+    # Visualización de p-values por variable
+    plt.figure(figsize=(12, 6))
+
+    plt.bar(
+        resultados_drift["variable"],
+        resultados_drift["p_value"]
+    )
+
+    plt.axhline(
+        y=0.05,
+        linestyle="--",
+        label="Umbral drift p-value = 0.05"
+    )
+
+    plt.xticks(rotation=90)
+    plt.xlabel("Variables")
+    plt.ylabel("p-value")
+    plt.title("Monitoreo de Data Drift - KS Test")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
