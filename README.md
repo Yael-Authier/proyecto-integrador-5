@@ -294,7 +294,38 @@ streamlit run app/streamlit_app.py
 
 \---
 
+---
 
+# API con FastAPI
+
+El proyecto incluye una API desarrollada con FastAPI para exponer el modelo entrenado y permitir predicciones en tiempo real.
+
+## Levantar la API localmente
+
+```bash
+uvicorn src.model_deploy:app --reload
+
+Documentación automática
+
+Una vez levantada la API, se puede acceder a la documentación Swagger desde:
+
+http://127.0.0.1:8000/docs
+Endpoint principal
+POST /predict
+
+Este endpoint recibe datos de entrada de un cliente y devuelve:
+
+Predicción del modelo
+Resultado interpretado
+Probabilidad estimada de pago a tiempo
+
+Ejemplo de respuesta:
+
+{
+  "prediccion": 0,
+  "resultado": "Riesgo de no pago",
+  "probabilidad_pago_a_tiempo": 0.2235
+}
 
 \# Autor
 
