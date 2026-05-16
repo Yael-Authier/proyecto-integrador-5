@@ -31,3 +31,56 @@ Yael Authier
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
+
+from ft_engineering import (
+    cargar_datos,
+    limpiar_tendencia_ingresos,
+    tratar_valores_nulos,
+    transformar_variables_categoricas,
+    separar_variables_modelo
+)
+
+# =================================================
+# 2. Ejecución inicial del pipeline
+# =================================================
+
+if __name__ == "__main__":
+
+    # Ruta del dataset
+    ruta = "data/Base_de_datos.xlsx"
+
+    # Carga de datos
+    df = cargar_datos(ruta)
+
+    # Limpieza de inconsistencias
+    df = limpiar_tendencia_ingresos(df)
+
+    # Tratamiento de nulos
+    df = tratar_valores_nulos(df)
+
+    # Transformación de categóricas
+    df = transformar_variables_categoricas(df)
+
+    # Separación de variables
+    X, y = separar_variables_modelo(df)
+
+    print("Dimensiones de X:")
+    print(X.shape)
+
+    print("\nDimensiones de y:")
+    print(y.shape)
+
+    # Separación train/test
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42,
+        stratify=y
+    )
+
+    print("\nDimensiones de entrenamiento:")
+    print(X_train.shape)
+
+    print("\nDimensiones de prueba:")
+    print(X_test.shape)
