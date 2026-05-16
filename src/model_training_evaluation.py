@@ -33,6 +33,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from imblearn.over_sampling import SMOTE
 from sklearn.metrics import classification_report, roc_auc_score
 
 from ft_engineering import (
@@ -105,6 +106,20 @@ if __name__ == "__main__":
         stratify=y
     )
 
+    # Balanceo de clases con SMOTE solo sobre entrenamiento
+    smote = SMOTE(random_state=42)
+
+    X_train_smote, y_train_smote = smote.fit_resample(
+        X_train,
+        y_train
+    )
+
+    print("\nDistribución de clases antes de SMOTE:")
+    print(y_train.value_counts())
+
+    print("\nDistribución de clases después de SMOTE:")
+    print(y_train_smote.value_counts())
+
     print("\nDimensiones de entrenamiento:")
     print(X_train.shape)
 
@@ -121,7 +136,7 @@ if __name__ == "__main__":
         random_state=42
     )
 
-    modelo_logistico.fit(X_train, y_train)
+    modelo_logistico.fit(X_train_smote, y_train_smote)
 
     # Predicciones
     y_pred = modelo_logistico.predict(X_test)
@@ -147,7 +162,7 @@ if __name__ == "__main__":
         class_weight="balanced"
     )
 
-    modelo_rf.fit(X_train, y_train)
+    modelo_rf.fit(X_train_smote, y_train_smote)
 
     # Predicciones
     y_pred_rf = modelo_rf.predict(X_test)
