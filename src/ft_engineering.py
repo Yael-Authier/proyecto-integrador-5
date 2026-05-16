@@ -25,3 +25,23 @@ Autor:
 ------
 Yael Authier
 """
+import pandas as pd
+import numpy as np
+
+
+def cargar_datos(ruta_archivo: str) -> pd.DataFrame:
+    """
+    Carga la base de datos desde un archivo Excel.
+
+    Parámetros:
+    -----------
+    ruta_archivo: str
+        Ruta donde se encuentra el archivo de datos.
+
+    Retorna:
+    --------
+    pd.DataFrame
+        Dataset cargado en formato DataFrame.
+    """
+    df = pd.read_excel(ruta_archivo)
+    return df
