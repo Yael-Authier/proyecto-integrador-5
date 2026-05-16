@@ -4,7 +4,14 @@
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 ![SonarCloud](https://img.shields.io/badge/SonarCloud-passing-orange)
+![Render](https://img.shields.io/badge/Render-deployed-purple)
 ![Status](https://img.shields.io/badge/status-complete-success)
+
+## Deploy online
+
+API pública disponible en:
+
+https://pi-m5-riesgo-crediticio.onrender.com/docs
 
 
 # Proyecto Integrador MLOps - Predicción de Pago de Créditos
