@@ -16,9 +16,9 @@ WORKDIR /app
 # Instalación de dependencias
 # =================================================
 # Primero se copia requirements.txt para instalar las librerías necesarias
-COPY requirements.txt .
+COPY requirements-api.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-api.txt
 
 
 # =================================================
