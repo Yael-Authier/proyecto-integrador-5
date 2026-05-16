@@ -32,6 +32,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, roc_auc_score
 
 from ft_engineering import (
@@ -67,9 +68,27 @@ if __name__ == "__main__":
     # Separación de variables
     X, y = separar_variables_modelo(df)
 
+    # Análisis de correlación con la variable objetivo
+    correlaciones = df.corr(numeric_only=True)["Pago_atiempo"] \
+        .sort_values(ascending=False)
+
+    print("\nCorrelaciones con Pago_atiempo:")
+    print(correlaciones)
+
     # Eliminación temporal de variables de fecha
     if "fecha_prestamo" in X.columns:
         X = X.drop(columns=["fecha_prestamo"])
+
+     # Eliminación de posibles variables con data leakage
+    columnas_leakage = [
+        "saldo_mora",
+        "saldo_total",
+        "saldo_principal",
+        "saldo_mora_codeudor",
+        "puntaje"
+    ]
+
+    X = X.drop(columns=columnas_leakage)
 
     print("Dimensiones de X:")
     print(X.shape)
@@ -117,3 +136,29 @@ if __name__ == "__main__":
     print("\nROC-AUC - Regresión Logística:")
 
     print(roc_auc_score(y_test, y_pred_proba))
+
+    # =================================================
+    # 4. Entrenamiento de Random Forest
+    # =================================================
+
+    modelo_rf = RandomForestClassifier(
+        n_estimators=100,
+        random_state=42,
+        class_weight="balanced"
+    )
+
+    modelo_rf.fit(X_train, y_train)
+
+    # Predicciones
+    y_pred_rf = modelo_rf.predict(X_test)
+
+    y_pred_proba_rf = modelo_rf.predict_proba(X_test)[:, 1]
+
+    # Evaluación del modelo
+    print("\nReporte de clasificación - Random Forest:")
+
+    print(classification_report(y_test, y_pred_rf))
+
+    print("\nROC-AUC - Random Forest:")
+
+    print(roc_auc_score(y_test, y_pred_proba_rf))
