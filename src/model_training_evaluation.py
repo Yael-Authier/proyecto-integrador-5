@@ -38,6 +38,9 @@ from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
 import matplotlib.pyplot as plt
 import joblib
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import RocCurveDisplay
 
 
 from ft_engineering import (
@@ -250,3 +253,37 @@ if __name__ == "__main__":
     joblib.dump(modelo_xgb, "modelo_xgboost.pkl")
 
     print("\nModelo XGBoost guardado correctamente")
+
+    # =================================================
+    # 8. Matriz de confusión - XGBoost
+    # =================================================
+
+    matriz_confusion = confusion_matrix(
+        y_test,
+        y_pred_xgb
+    )
+
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=matriz_confusion
+    )
+
+    disp.plot()
+
+    plt.title("Matriz de Confusión - XGBoost")
+
+    plt.show()
+
+
+    # =================================================
+    # 9. Curva ROC - XGBoost
+    # =================================================
+
+    RocCurveDisplay.from_estimator(
+        modelo_xgb,
+        X_test,
+        y_test
+    )
+
+    plt.title("Curva ROC - XGBoost")
+
+    plt.show()
