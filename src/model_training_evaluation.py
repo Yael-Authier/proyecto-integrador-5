@@ -31,10 +31,12 @@ Yael Authier
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, roc_auc_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from imblearn.over_sampling import SMOTE
-from sklearn.metrics import classification_report, roc_auc_score
+from xgboost import XGBClassifier
+
 
 from ft_engineering import (
     cargar_datos,
@@ -177,3 +179,31 @@ if __name__ == "__main__":
     print("\nROC-AUC - Random Forest:")
 
     print(roc_auc_score(y_test, y_pred_proba_rf))
+
+    # =================================================
+    # 5. Entrenamiento de XGBoost
+    # =================================================
+
+    modelo_xgb = XGBClassifier(
+        n_estimators=100,
+        learning_rate=0.1,
+        max_depth=4,
+        random_state=42,
+        eval_metric="logloss"
+    )
+
+    modelo_xgb.fit(X_train_smote, y_train_smote)
+
+    # Predicciones
+    y_pred_xgb = modelo_xgb.predict(X_test)
+
+    y_pred_proba_xgb = modelo_xgb.predict_proba(X_test)[:, 1]
+
+    # Evaluación del modelo
+    print("\nReporte de clasificación - XGBoost:")
+
+    print(classification_report(y_test, y_pred_xgb))
+
+    print("\nROC-AUC - XGBoost:")
+
+    print(roc_auc_score(y_test, y_pred_proba_xgb))
