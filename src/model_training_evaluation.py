@@ -41,6 +41,7 @@ import joblib
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import RocCurveDisplay
+from sklearn.model_selection import GridSearchCV
 
 
 from ft_engineering import (
@@ -287,3 +288,32 @@ if __name__ == "__main__":
     plt.title("Curva ROC - XGBoost")
 
     plt.show()
+
+    # =================================================
+    # 10. Optimización de hiperparámetros - XGBoost
+    # =================================================
+
+    parametros_xgb = {
+        "n_estimators": [100, 200],
+        "max_depth": [3, 4, 5],
+        "learning_rate": [0.05, 0.1]
+    }
+
+    grid_xgb = GridSearchCV(
+        estimator=XGBClassifier(
+            random_state=42,
+            eval_metric="logloss"
+        ),
+        param_grid=parametros_xgb,
+        scoring="roc_auc",
+        cv=3,
+        n_jobs=-1
+    )
+
+    grid_xgb.fit(X_train_smote, y_train_smote)
+
+    print("\nMejores hiperparámetros - XGBoost:")
+    print(grid_xgb.best_params_)
+
+    print("\nMejor ROC-AUC en validación cruzada:")
+    print(grid_xgb.best_score_)
