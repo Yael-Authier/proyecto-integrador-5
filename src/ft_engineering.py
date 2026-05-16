@@ -5,58 +5,58 @@ Feature Engineering y Preprocesamiento
 
 Objetivo:
 ---------
-En este archivo se realizará la preparación de los datos
-para el entrenamiento de modelos de Machine Learning.
+Preparar los datos para el entrenamiento de modelos de Machine Learning.
 
 Actividades principales:
 ------------------------
-1. Tratamiento de valores nulos.
+1. Carga de datos.
 2. Corrección de inconsistencias.
-3. Transformación de variables categóricas.
-4. Escalado y normalización.
-5. Creación de nuevas variables.
-6. Preparación final del dataset para modelado.
+3. Tratamiento de valores nulos.
+4. Transformación de variables categóricas.
+5. Escalado y normalización.
+6. Creación de nuevas variables.
+7. Preparación final del dataset para modelado.
 
 Proyecto:
-----------
+---------
 Predicción de pago a tiempo en créditos.
 
 Autor:
 ------
 Yael Authier
 """
+
+# =================================================
+# 1. Importación de librerías
+# =================================================
+
 import pandas as pd
 import numpy as np
 
 
+# =================================================
+# 2. Carga de datos
+# =================================================
+
 def cargar_datos(ruta_archivo: str) -> pd.DataFrame:
     """
     Carga la base de datos desde un archivo Excel.
-
-    Parámetros:
-    -----------
-    ruta_archivo: str
-        Ruta donde se encuentra el archivo de datos.
-
-    Retorna:
-    --------
-    pd.DataFrame
-        Dataset cargado en formato DataFrame.
     """
     df = pd.read_excel(ruta_archivo)
     return df
+
+
+# =================================================
+# 3. Limpieza de inconsistencias
+# =================================================
 
 def limpiar_tendencia_ingresos(df: pd.DataFrame) -> pd.DataFrame:
     """
     Limpia la variable tendencia_ingresos.
 
-    Esta variable debería contener categorías como:
-    - Creciente
-    - Estable
-    - Decreciente
-
-    Durante el EDA se detectaron valores numéricos mezclados,
-    por lo que se reemplazan por NaN para tratarlos luego.
+    Durante el EDA se detectó que esta variable mezcla categorías válidas
+    con valores numéricos inconsistentes. Por este motivo, se conservan
+    solo las categorías esperadas y el resto se reemplaza por NaN.
     """
     df = df.copy()
 
@@ -69,9 +69,13 @@ def limpiar_tendencia_ingresos(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
+# =================================================
+# 4. Ejecución de prueba del script
+# =================================================
+
 if __name__ == "__main__":
 
-    # Carga de datos
     ruta = "data/Base_de_datos.xlsx"
 
     df = cargar_datos(ruta)
@@ -79,8 +83,7 @@ if __name__ == "__main__":
     print("Dataset cargado correctamente")
     print(df.shape)
 
-    # Limpieza de tendencia_ingresos
     df = limpiar_tendencia_ingresos(df)
 
-    print("\nValores únicos de tendencia_ingresos:")
+    print("\nValores únicos de tendencia_ingresos después de la limpieza:")
     print(df["tendencia_ingresos"].unique())
