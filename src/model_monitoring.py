@@ -46,3 +46,89 @@ def cargar_datos(ruta_archivo: str) -> pd.DataFrame:
     df = pd.read_excel(ruta_archivo)
 
     return df
+
+# =================================================
+# 3. Simulación de datos actuales
+# =================================================
+
+def simular_datos_actuales(
+    df: pd.DataFrame,
+    frac: float = 0.3,
+    random_state: int = 42
+) -> pd.DataFrame:
+    """
+    Simula una muestra de datos actuales a partir del dataset histórico.
+
+    En un entorno productivo, estos datos vendrían de nuevas solicitudes
+    o registros recientes.
+    """
+    datos_actuales = df.sample(
+        frac=frac,
+        random_state=random_state
+    )
+
+    return datos_actuales
+
+
+# =================================================
+# 4. Cálculo de data drift con KS Test
+# =================================================
+
+def calcular_drift_ks(
+    datos_historicos: pd.DataFrame,
+    datos_actuales: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    Calcula data drift para variables numéricas utilizando KS Test.
+
+    Si p-value < 0.05, se considera posible drift.
+    """
+    resultados = []
+
+    variables_numericas = datos_historicos.select_dtypes(
+        include=["int64", "float64"]
+    ).columns
+
+    for variable in variables_numericas:
+
+        historico = datos_historicos[variable].dropna()
+        actual = datos_actuales[variable].dropna()
+
+        estadistico, p_value = ks_2samp(
+            historico,
+            actual
+        )
+
+        drift_detectado = p_value < 0.05
+
+        resultados.append({
+            "variable": variable,
+            "ks_statistic": estadistico,
+            "p_value": p_value,
+            "drift_detectado": drift_detectado
+        })
+
+    resultados_df = pd.DataFrame(resultados)
+
+    return resultados_df
+
+
+# =================================================
+# 5. Ejecución de prueba del monitoreo
+# =================================================
+
+if __name__ == "__main__":
+
+    ruta = "data/Base_de_datos.xlsx"
+
+    df_historico = cargar_datos(ruta)
+
+    df_actual = simular_datos_actuales(df_historico)
+
+    resultados_drift = calcular_drift_ks(
+        df_historico,
+        df_actual
+    )
+
+    print("Resultados de data drift con KS Test:")
+    print(resultados_drift)
